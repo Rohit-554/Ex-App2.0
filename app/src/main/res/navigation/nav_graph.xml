@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/register">
+
+    <fragment
+        android:id="@+id/register"
+        android:name="com.example.navigation.screens.fragments.Register"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/register"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_register_to_home"
+            app:destination="@id/apphome"
+            app:popUpTo="@id/register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.navigation.screens.fragments.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/apphome"
+            app:popUpTo="@id/register"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_resetPassword2"
+            app:destination="@id/resetPassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/apphome"
+        android:name="com.example.navigation.screens.fragments.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_gifpage" >
+        <action
+            android:id="@+id/action_home_to_note"
+            app:destination="@id/note"
+            app:popUpTo="@id/apphome"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_apphome_to_register"
+            app:destination="@id/register"
+            app:popUpTo="@id/apphome"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_apphome_to_login"
+            app:destination="@id/login"
+            app:popUpTo="@id/apphome"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/note"
+        android:name="com.example.navigation.screens.fragments.Note"
+        android:label="fragment_note"
+        tools:layout="@layout/fragment_note" />
+    <fragment
+        android:id="@+id/resetPassword"
+        android:name="com.example.navigation.screens.fragments.ResetPassword"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
+</navigation>

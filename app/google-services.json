@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "83242210429",
+    "project_id": "navigation-cc1d7",
+    "storage_bucket": "navigation-cc1d7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83242210429:android:bed638302cdb9d16facd14",
+        "android_client_info": {
+          "package_name": "com.example.navigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83242210429-3u29ar1qpfa936alkb53jl5ccjghg9sl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.navigation",
+            "certificate_hash": "53a560589bf68c255638bc3be31289ed592dd4a2"
+          }
+        },
+        {
+          "client_id": "83242210429-pf8vslcva6m3gk1gpk7et15ls53ab3qo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC82olmMO3wEWMmEngNIGoCmiFb2P5QKc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83242210429-pf8vslcva6m3gk1gpk7et15ls53ab3qo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
