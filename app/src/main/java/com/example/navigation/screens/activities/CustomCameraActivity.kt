@@ -150,18 +150,8 @@ class CustomCameraActivity : BaseActivity() {
 
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${outputFileResults.savedUri}"
-//                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     outputFileResults.savedUri?.let { showDialog(it) }
-
-//                    startActivity(intent)
-
                     _binding.progressBar.visibility  = View.VISIBLE
-//                    val bundle = Bundle()
-//                    bundle.putString("ImageUri", "${outputFileResults.savedUri}")
-//                    val fragObj = com.example.navigation.screens.fragments.Camera()
-//                    fragObj.arguments = bundle
-//                    Log.d("testcamera", fragObj.arguments.toString())
-//                    startActivity(Intent(applicationContext,MlGifActivity::class.java))
 
                 }
             }
@@ -234,7 +224,7 @@ class CustomCameraActivity : BaseActivity() {
         customDialog.setContentView(com.example.navigation.R.layout.imagepreview)
         val imagePreview = customDialog.findViewById<ImageView>(R.id.previewImage)
         val confirmBtn = customDialog.findViewById<LottieAnimationView>(R.id.go_action)
-        val cancelBtn = customDialog.findViewById<LottieAnimationView>(R.id.cancel_button)
+        val cancelBtn = customDialog.findViewById<LottieAnimationView>(R.id.cancel_action)
         imagePreview.setImageURI(uri)
         confirmBtn.setOnClickListener {
             confirmBtn.repeatCount = LottieDrawable.INFINITE
@@ -245,6 +235,9 @@ class CustomCameraActivity : BaseActivity() {
             startActivity(intent)
 
         }
+        cancelBtn.setOnClickListener {
+            customDialog.dismiss()
+        }
         customDialog.show()
         customDialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -253,9 +246,6 @@ class CustomCameraActivity : BaseActivity() {
         customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         customDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
         customDialog.window?.setGravity(Gravity.BOTTOM)
-//        dismissGifDialog.setOnClickListener {
-//            customDialog.dismiss()
-//        }
     }
 
 

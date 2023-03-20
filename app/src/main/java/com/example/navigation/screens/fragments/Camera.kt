@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.navigation.R
 import com.example.navigation.databinding.FragmentCameraBinding
 import ja.burhanrashid52.photoeditor.PhotoEditorView
@@ -32,7 +33,7 @@ class Camera : Fragment() {
     private lateinit var bundle: Bundle
     private lateinit var intent: Intent
     private lateinit var uri: Uri
-    private lateinit var bitmap: Bitmap
+
     private lateinit var contentResolver: ContentResolver
     private lateinit var matrix: Matrix
 
@@ -43,17 +44,13 @@ class Camera : Fragment() {
 
     ): View {
         intent = requireActivity().intent
-
         uri = intent.getStringExtra("imageUri")?.toUri()!!
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         val inputStream: InputStream? = activity?.contentResolver?.openInputStream(uri)
         var yourDrawable = Drawable.createFromStream(inputStream, uri.toString())
-
-
-        val mPhotoEditorView: PhotoEditorView = binding.photoEditorView
-
-        GlobalScope.launch(Dispatchers.Main) {
+        getBitmap()
+        lifecycleScope.launch(Dispatchers.Main) {
             val test = withContext(Dispatchers.IO) {
                 ImageDecoder.decodeBitmap(
                     ImageDecoder.createSource(
@@ -63,44 +60,11 @@ class Camera : Fragment() {
                 )
             }
 
-//            val bmp = getBitmapFromView(binding.editImage)
-
-//            val bmp: Bitmap = Bitmap.createBitmap(binding.editImage.getDrawingCache())
-//            Log.d("editbitmap","$bitmap_1")
 
             binding.removebg.setOnClickListener {
-//                combineImages(test, bmp)
-//                binding.gifImage.setImageBitmap(combineImages(test,bmp))
-//                binding.gifImage.invalidate()
-//                BackgroundRemover.bitmapForProcessing(
-//                    test, true,
-//                    object : OnBackgroundChangeListener {
-//                        override fun onSuccess(bitmap: Bitmap) {
-//                            //do what ever you want to do with this bitmap
-//
-//                            binding.gifImage.setImageBitmap(bitmap)
-//                            Log.d("imagetesting", "${bitmap}")
-//                        }
-//
-//                        override fun onFailed(exception: Exception) {
-//                            Toast.makeText(
-//                                requireContext(),
-//                                "Something went wrong",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                    }
-//                )
-
-
-                //here is code 1
 
             }
         }
-
-//        getBitmap()
-
-
         return binding.root
     }
 
@@ -108,8 +72,6 @@ class Camera : Fragment() {
         val matrix = Matrix()
         val rect = Rect()
         rect.set(0,0,100,100)
-
-//        matrix.setValues(floatArrayOf(1f, .5f, 0f, 0f, 1f, 0f, 0f, 0f, 1f))
         var width = 0
         var height = 0
         width = background!!.width
@@ -138,10 +100,9 @@ class Camera : Fragment() {
         view.draw(canvas)
         return bitmap
     }
-    fun getBitmap(): Bitmap {
-        Thread(Runnable {
-            // a potentially time consuming task
-            val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+    fun getBitmap(){
+        lifecycleScope.launch(Dispatchers.IO){
+         val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 ImageDecoder.decodeBitmap(
                     ImageDecoder.createSource(
                         requireContext().contentResolver,
@@ -151,8 +112,12 @@ class Camera : Fragment() {
             } else {
                 MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
             }
-        }).start()
-        return bitmap
+            withContext(Dispatchers.Main){
+                binding.gifImage.setImageBitmap(bitmap)
+            }
+
+        }
+
     }
 
 
